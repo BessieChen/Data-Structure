@@ -1,0 +1,9 @@
+public interface Queue<Element>{
+    void enqueue(Element e);
+    Element dequeue();
+    Element getFront();
+    int getSize();
+    boolean isEmpty();
+
+}
+

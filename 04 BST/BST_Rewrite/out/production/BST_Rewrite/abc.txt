@@ -1,0 +1,160 @@
+public void remove(Element e)
+    {
+        remove(root, e);
+    }
+
+    private void remove(Node node, Element e)
+    {
+        if(node == null)
+            return;
+
+        if(node.e.compareTo(e) > 0)
+        {
+            remove(node.left, e);
+        }
+        else if(node.e.compareTo(e) < 0)
+        {
+            remove(node.right,e);
+        }
+
+    }
+
+    public Element removeMin()
+    {
+        Element ret = minimum();
+        removeMin(root);
+        return ret;
+    }
+
+    //你在写removeMin()的时候，发现了，很难做到两件事，一个是作为递归时的返回Node，一个是返回你要的Element值。所以应该这里有两个函数：一个是找到Min的minimum()，一个是删除Min的removeMin()
+
+    public Element minimum()
+    {
+        return minimum(root);
+    }
+
+    private Element minimum(Node node)
+    {
+        if(node.left == null)
+        {
+            return node.e;
+        }
+        return minimum(node.left);
+    }
+
+    public Element maximum()
+    {
+        return minimum(root);
+    }
+
+    private Element maximum(Node node)
+    {
+        if(node.right == null)
+        {
+            return node.e;
+        }
+        return minimum(node.right);
+    }
+
+    private Node removeMin(Node node)
+    {
+
+//        if(node.left == null)
+//            return null;
+//
+//        while(node.left.e != null)
+//        {
+//
+//        }
+//        if(node == null)
+//        {
+//            return null;
+//        }
+//
+//        if(node.left != null)
+//        {
+//            node.left = removeMin(node.left);
+//        }
+//        else if(node.right == null)
+//        {
+//            node = removeMin(node.left);
+//        }
+//        else//(node.left == null && node.right != null)
+//        {
+//            removeMin()
+//        }
+
+
+        //record:
+//        if(node == null)
+//            return null;
+//
+//        node = removeMin(node.left);
+
+        if(node.left == null)
+        {
+            //method 1:
+//            if(node.right == null)
+//                return null;
+//            return node.right;
+
+            //method 2:其实上面的method 1 暗示了如果node.right == null; return null;相当于：
+            return node.right;
+        }
+
+        node.left = removeMin(node.left);
+        return node.left;
+    }
+
+    private void removeMinVoid(Node node)
+    {
+        if(node.left == null)
+        {
+            if(node.right != null)
+            {
+                node = node.right;
+            }
+            node = null;
+        }
+        removeMinVoid(node.left);
+    }
+
+    private Element removeMinElement(Node node)
+    {
+        Element ret;
+        if(node.left == null)
+        {
+            if(node.right != null)
+            {
+                ret = node.left.e;
+                node = node.right;
+            }
+            ret = node.left.e;
+            node = null;
+        }
+        ret = removeMinElement(node.left);
+        return ret;
+    }
+
+    public Element removeMax()
+    {
+        Element ret = maximum();
+        root = removeMax(root);
+        return ret;
+    }
+
+    private Node removeMax(Node node)
+    {
+        if(node.right == null)
+        {
+            //method 1:
+//            if(node.left != null)//if我喜欢先写特殊的情况。
+//            {
+//                return node.left;
+//            }
+//            return null;
+            return node.left;
+        }
+        node.right = removeMax(node.right);
+        return node.right;
+    }
